@@ -1,0 +1,328 @@
+
+
+components:
+  schemas:
+    WeatherData:
+      type: object
+      properties:
+        # _id:
+        #   type: string
+        #   example: "62a23958e5a9e9b88f853a67"
+        deviceName:
+          type: string
+          example: "Noosa_Sensor"
+        precipitation:
+          type: number
+          example: 15.5
+        readingDateTime:
+          type: string
+          format: date-time
+        latitude:
+          type: number
+          example: 23.456
+        longitude:
+          type: number
+          example: -176.998
+        temperature:
+          type: number
+          example: 23.4
+        atmosphericPressure:
+          type: number
+          example: 1012
+        maxWindSpeed:
+          type: number
+          example: 10.5
+        solarRadiation:
+          type: number
+          example: 300
+        vaporPressure:
+          type: number
+          example: 1.5
+        humidity:
+          type: number
+          example: 75
+        windDirection:
+          type: number
+          example: 45
+    NewWeatherData:
+      type: object
+      properties:
+        deviceName:
+          type: string
+          example: Noosa_Sensor
+        precipitation:
+          type: number
+          example: 15.5
+        readingDateTime:
+          type: string
+          format: date-time
+        latitude:
+          type: number
+          example: 23.456
+        longitude:
+          type: number
+          example: -176.998
+        temperature:
+          type: number
+          example: 23.4
+        atmosphericPressure:
+          type: number
+          example: 1012
+        maxWindSpeed:
+          type: number
+          example: 10.5
+        solarRadiation:
+          type: number
+          example: 300
+        vaporPressure:
+          type: number
+          example: 1.5
+        humidity:
+          type: number
+          example: 75
+        windDirection:
+          type: number
+          example: 45
+    User:
+      type: object
+      properties:
+        _id: 
+          type: string
+          example: "65b9f355ff2ee2cc6c66a291"
+        email:
+          type: string
+          format: email
+          example: "teacher@example.com"
+        password:
+          type: string
+          format: password
+        role:
+          type: string
+          enum:
+            - Teacher
+            - User
+            - Sensor
+        createdAt:
+          type: string
+          format: date-time
+          example: "2023-07-28T14:15:22Z"
+        authenticationKey:
+          type: string
+          nullable: true
+          example: ""
+        lastLogin:
+          type: string
+          nullable: true
+          format: date-time
+          example: "2024-07-28T14:15:22Z"
+    NewUser:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+          example: "teacher@gmail.com"
+        password:
+          type: string
+          format: password
+          example: "abc123"
+        role:
+          type: string
+          enum:
+            - Teacher
+            - User
+            - Sensor
+        authenticationKey:
+          type: string
+          nullable: true
+          example: ""
+  requestBodies:
+    NewWeatherData:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/NewWeatherData"
+    NewUser:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/NewUser"
+  responses:
+    200_Success:
+        description: "Successful request"
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: integer
+                  example: 200
+                message:
+                  type: string
+                  example: "Request was successful"
+    200_WeatherDataObject:
+      description: Successful response with weather data object
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                example: 200
+              message:
+                type: string
+                example: "Successful response with weather data object"
+              weatherData:
+                $ref: "#/components/schemas/WeatherData"
+    200_WeatherDataArray:
+      description: Successful response with weather data array
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                example: 200
+              message:
+                type: string
+                example: "Get all weather data"
+              weatherData:
+                type: array
+                items:
+                  $ref: "#/components/schemas/WeatherData"
+    200_UserObject:
+      description: Successful response with user object
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                example: 200
+              message:
+                type: string
+                example: "Successful response with user object"
+              user:
+                $ref: "#/components/schemas/User"
+    200_UserDataArray:
+      description: Successful response with user data array
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                example: 200
+              message:
+                type: string
+                example: "Get all user data"
+              weatherData:
+                type: array
+                items:
+                  $ref: "#/components/schemas/User"
+    201_UserCreated:
+       description: "User successfully created"
+       content:
+         application/json:
+           schema:
+            type: "object"
+            properties:
+              status:
+                 type: "integer"
+                 example: 201
+              message:
+                 type: "string"
+                 example: "User successfully created"
+              user:
+                 $ref: "#/components/schemas/User"
+    201_WeatherDataCreated:
+      description: Successful creation of weather data
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                example: 201
+              message:
+                type: string
+                example: Weather data created successfully
+              weatherData:
+                $ref: "#/components/schemas/NewWeatherData"
+    204_NoContent:
+      description: "No content"
+      content: {}
+
+    400_InvalidRequest:
+      description: Invalid Request
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                example: 400
+              message:
+                type: string
+                example: "Invalid Request"
+    401_Unauthorized:
+      description: Unauthorized request
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                example: 401
+              message:
+                type: string
+                example: "Unauthorized access. Please provide valid credentials."
+    403_Forbidden:
+      description: "Access forbidden."
+      content:
+        application/json:
+          schema:
+            type: "object"
+            properties:
+              status:
+                type: "integer"
+                example: 403
+              message:
+                type: "string"
+                example: "Access forbidden."
+    404_NotFound:
+      description: "Resource not found"
+      content:
+        application/json:
+          schema:
+            type: "object"
+            properties:
+              status:
+                type: "integer"
+                example: 404
+              message:
+                type: "string"
+                example: "Resource not found"
+    500_DatabaseError:
+      description: Database Error
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                example: 500
+              message:
+                type: string
+                example: "Error processing request"
