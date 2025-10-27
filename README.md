@@ -1,5 +1,4 @@
 # weather-data-api-first
-# weather-data-api-first
 🧩 Features
 
 RESTful API Architecture
